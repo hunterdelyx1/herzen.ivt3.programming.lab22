@@ -86,7 +86,7 @@ public class App
         System.out.println("=== Zad 8 ===");
         count = 0;
         String vowels_array= "AEIOUaeiou";
-        count = my_name.chars().mapToObj(i -> new Character((char) i)).filter(i -> vowels_array.indexOf(i) != -1).collect(Collectors.toList()).size();
+        count = (int) my_name.chars().mapToObj(i -> new Character((char) i)).filter(i -> vowels_array.indexOf(i) != -1).count();
         System.out.println("Amount of different vowels: " + count);
     }
 }
