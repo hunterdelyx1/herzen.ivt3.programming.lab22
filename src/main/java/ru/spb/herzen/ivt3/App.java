@@ -2,7 +2,6 @@ package ru.spb.herzen.ivt3;
 
 import org.kohsuke.randname.RandomNameGenerator;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,74 +18,38 @@ public class App
             String name = rand.next();
             array.add(name);
         }
-
-        for(String tmp : array){
-            System.out.println("Hello, " + tmp);
-        }
-
+        array.forEach(System.out::println);
 
         /* === Exercise 2 === */
         System.out.println("=== Zad 2 ===");
-        Collections.sort(array);
-        for(String tmp : array){
-            System.out.println("Hello, " + tmp);
-        }
-
+        array.stream().sorted().forEach(s -> System.out.println("Hello, " + s));
 
         /* === Exercise 3 === */
         System.out.println("=== Zad 3 ===");
-        for(int i=2; i<5; i++){
-            System.out.println("Hello, " + array.get(i));
-        }
-
+        array.stream().filter(s -> array.indexOf(s) > 1).filter(s -> array.indexOf(s) < 5).forEach(s -> System.out.println("Hello, " + s));
 
         /* === Exercise 4 === */
         System.out.println("=== Zad 4 ===");
-        for(int i=0; i<15; i++){
-            array.set(i, array.get(i).toUpperCase());
-        }
-
-        for(String tmp : array){
-            System.out.println("Hello, " + tmp);
-        }
+        array.stream().map(s -> s.toUpperCase()).forEach(s -> System.out.println("Hello, " + s));
 
         /* === Exercise 5 === */
-        System.out.println("=== Zad 5 ===");
-        for(int i=0; i<15; i++){
-            array.set(i, array.get(i).toUpperCase());
-        }
-
-        for(String tmp : array){
-            System.out.println("Hello, " + tmp);
-        }
-
-        /* === Exercise 6 === */
         System.out.println("=== Zad 6 ===");
-        List<Integer> num_array = new ArrayList<Integer>();
-
-        for(int i=0; i<15; i++){
-            num_array.add((int) Math.floor(Math.random() * 201));
-        }
-        int count = 0;
-        for(Integer tmp : num_array){
-            if(tmp%2==0){
-                count++;
-            }
-            System.out.println(tmp);
-        }
+        List<Integer> num_array = new Random().ints(10, 0, 100).mapToObj(i -> new Integer(i)).collect(Collectors.toList());
+        num_array.forEach(System.out::println);
+        int count = (int) num_array.stream().filter(x -> x%2==0).count();
         System.out.println("Amount of even numbers: " + count);
 
-        /* === Exercise 7 === */
+        /* === Exercise 6 === */
         System.out.println("=== Zad 7 ===");
         String my_name = "Valentin";
-        List<Character> char_array = my_name.chars().mapToObj(i -> new Character((char) i)).sorted().collect(Collectors.toList());
+        List<Character> char_array = my_name.chars().mapToObj(i -> new Character((char) i)).sorted((a,b)-> Character.toLowerCase(a)-Character.toLowerCase(b)).collect(Collectors.toList());
         char_array.forEach(System.out::println);
 
-        /* === Exercise 8 === */
+        /* === Exercise 7 === */
         System.out.println("=== Zad 8 ===");
         count = 0;
-        String vowels_array= "AEIOUaeiou";
-        count = (int) my_name.chars().mapToObj(i -> new Character((char) i)).filter(i -> vowels_array.indexOf(i) != -1).count();
+        String vowels_array= "aeiou";
+        count = (int) my_name.chars().mapToObj(x -> Character.toLowerCase(x)).filter(i -> vowels_array.indexOf(i) != -1).count();
         System.out.println("Amount of different vowels: " + count);
     }
 }
